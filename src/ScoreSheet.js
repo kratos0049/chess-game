@@ -1,25 +1,32 @@
 import React, { useEffect, useRef, useState } from "react";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TablePagination from '@mui/material/TablePagination';
+import TableRow from '@mui/material/TableRow';
 
 function ScoreSheet(props){
  return(
 <>
 
-<table>
-         <tbody>
-            <tr><td>White</td> <td>Black</td></tr>
+<Table>
+         <TableBody>
+            <TableRow><TableCell>White</TableCell> <TableCell>Black</TableCell></TableRow>
             
            {
                 props.whiteMoves.map((move,i) =>(
-                    <tr key={i}>
-                        <td>{props.whiteMoves[i]}</td>
+                    <TableRow key={i}>
+                        <TableCell>{props.whiteMoves[i]}</TableCell>
 
-                        <td>{props.blackMoves[i]}</td>
-                    </tr>
+                        <TableCell>{props.blackMoves[i]}</TableCell>
+                    </TableRow>
                 ))
            }
           
-         </tbody>
-</table>
+         </TableBody>
+</Table>
 
 
  

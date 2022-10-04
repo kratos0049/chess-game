@@ -12,6 +12,7 @@ import {storage} from "./firebase"
 import {db} from "./firebase"
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import { async } from "@firebase/util";
+import { Button, Grid } from "@mui/material";
 
 export default function Board(){
 
@@ -216,6 +217,7 @@ export default function Board(){
       const save = async() => {
         game.current.header('White', 'Plunky', 'Black', 'Plinkie')
         await addDoc(usersCollectionRef, {pgn : game.current.pgn()}) 
+        alert("Saved in Firebase, go to /database to review the game")
     //     fetch("http://localhost:5000/save", {
     //   method: 'POST', // or 'PUT'
     //   headers: {
@@ -235,6 +237,8 @@ export default function Board(){
 
   return (
     <>
+    <Grid container>
+      <Grid item xs={6}>
           <Chessboard
             id="humanVsHuman"
             width={700}
@@ -252,12 +256,16 @@ export default function Board(){
             onSquareClick={onSquareClick}
             onSquareRightClick={onSquareRightClick}
           />
-            <br/>
-            <br/>
-          <button onClick={save}> Save </button>
-          
-          
+        </Grid>
+          <Grid item xs={3}>
+          <Button onClick={save} variant={"outlined"}> Save </Button>
+          </Grid>
+          <Grid item xs={3}>
           <ScoreSheet whiteMoves={whiteMoves} blackMoves= {blackMoves} />
+          </Grid>
+          
+          
+    </Grid>
 
           {/* <AnalysisBoard moves={moves} /> */}
 

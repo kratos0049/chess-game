@@ -86,7 +86,6 @@ function Database(props){
         changeFen(chessGame.fen())
     }
     
- console.log(currentGame)
 return(
     
 <>
@@ -106,7 +105,7 @@ files.map((file,index)=>
  return(   
     <TableRow key={index}>
         <TableCell>{index+1}</TableCell> 
-        <TableCell onClick={()=>game(file.moves)}>{file.White} vs {file.Black}</TableCell>
+        <TableCell style={{cursor: 'pointer'}} onClick={()=>game(file.moves)}>{file.White} vs {file.Black}</TableCell>
     </TableRow>)
 }
 )
@@ -136,8 +135,8 @@ currentGame.map((move,index)=>
         
         return(
         <TableRow key={index}>   
-        <TableCell height={1} width={10} align="left" onClick={()=>display(index)}>{currentGame[index]}</TableCell>
-        <TableCell height={1} widgth={10} align="left" onClick={()=>display(index+1)}>{currentGame[index+1]}</TableCell>
+        <TableCell style={{cursor: 'pointer'}} height={1} width={10} align="left" onClick={()=>display(index)}>{currentGame[index]}</TableCell>
+        <TableCell style={{cursor: 'pointer'}} height={1} widgth={10} align="left" onClick={()=>display(index+1)}>{currentGame[index+1]}</TableCell>
         </TableRow>  
         )  
     }
