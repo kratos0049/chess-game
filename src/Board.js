@@ -19,6 +19,7 @@ export default function Board(){
 
   
   const game = useRef(null);
+
   useEffect(()=>{
     game.current = new Chess();
   }, [])
@@ -33,6 +34,7 @@ export default function Board(){
   const [blackMoves, addBlackMove]= useState([]);
   const [moves, changeMoves] = useState([]);
   const [progress, changeProgress] = useState(0);
+  const [pgn, changePgn] = useState("");
 
   useEffect(()=>{
   }, [squareStyles])
@@ -87,7 +89,7 @@ export default function Board(){
 
   
   const onDrop = ({ sourceSquare, targetSquare, piece }) => {
-    console.log(sourceSquare, targetSquare)
+    
     // const data = { username: 'example' };
     // fetch("http://localhost:5000/onDrop", {
     //   method: 'POST', // or 'PUT'
@@ -122,7 +124,7 @@ export default function Board(){
     else{
       addBlackMove([...blackMoves,piece.slice(1)+targetSquare]);
     }
-
+    changePgn(game.current.pgn())
     changeFen(game.current.fen)
     changeHistory(game.current.history({verbose:true}))
     changeSquareStyles(squareStyling({ pieceSquare, history }))
@@ -233,6 +235,8 @@ export default function Board(){
 
 
       }
+    
+    
 
 
   return (
@@ -257,13 +261,15 @@ export default function Board(){
             onSquareRightClick={onSquareRightClick}
           />
         </Grid>
-          <Grid item xs={3}>
+        <Grid item xs={3}>
+          {pgn}
+          </Grid>
+          <Grid item xs={12}>
           <Button onClick={save} variant={"outlined"}> Save </Button>
           </Grid>
-          <Grid item xs={3}>
-          <ScoreSheet whiteMoves={whiteMoves} blackMoves= {blackMoves} />
-          </Grid>
           
+          
+         
           
     </Grid>
 
