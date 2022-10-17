@@ -12,8 +12,9 @@ import {storage} from "./firebase"
 import {db} from "./firebase"
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import { async } from "@firebase/util";
-import { Button, Grid } from "@mui/material";
-
+import { Button, Grid, Input } from "@mui/material";
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
 export default function Board(){
 
 
@@ -35,6 +36,8 @@ export default function Board(){
   const [moves, changeMoves] = useState([]);
   const [progress, changeProgress] = useState(0);
   const [pgn, changePgn] = useState("");
+  const [darkColourSquare, changeDarkColourSquare] = useState("#b58863")
+  const [colourCode, changeColourCode] = useState("")
 
   useEffect(()=>{
   }, [squareStyles])
@@ -235,11 +238,28 @@ export default function Board(){
 
 
       }
-    
-    
+    const changeColour =(option)=>{
+      changeDarkColourSquare(option.value)
+    }
+
+    const handleChange=(event)=> {
+      changeColourCode(event.target.value)
+    }
+    const handleSubmit=(event)=> {
+      event.preventDefault()
+      changeDarkColourSquare(colourCode)
+    }
+    const options = [
+      { value: '#cc0000', label: 'Red' },
+      { value: '#267326', label: 'Green'},
+      { value: '#b58863', label: 'Brown'},
+    ]
+      
 
 
   return (
+
+    
     <>
     <Grid container>
       <Grid item xs={6}>
@@ -259,16 +279,28 @@ export default function Board(){
             onDragOverSquare = {onDragOverSquare}
             onSquareClick={onSquareClick}
             onSquareRightClick={onSquareRightClick}
+            darkSquareStyle={{  backgroundColor: darkColourSquare  }}
           />
         </Grid>
+        <br></br>
         <Grid item xs={3}>
-          {pgn}
+          <h2>Score Sheet :</h2>{pgn}
           </Grid>
+          
           <Grid item xs={12}>
-          <Button onClick={save} variant={"outlined"}> Save </Button>
+          <Button onClick={save} variant={"contained"}> Save </Button>
           </Grid>
-          
-          
+
+         
+      
+<Dropdown options={options} onChange={changeColour}  placeholder="Select colour" />
+
+
+
+      <form onSubmit={e=>(handleSubmit(e))}>
+          <Input type="text"  value={colourCode} onChange={handleChange} placeholder="Enter colour code" />
+        <input type="submit" value="Submit" />
+      </form>          
          
           
     </Grid>
